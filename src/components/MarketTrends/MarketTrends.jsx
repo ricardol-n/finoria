@@ -1,5 +1,5 @@
 import "./MarketTrends.css";
-import { useEffect, useState, useRef } from "react";
+import { useEffect,useCallback, useState, useRef } from "react";
 
 const symbols = ["AAPL", "MSFT", "NVDA", "AMZN", "SPY"];
 
@@ -9,46 +9,46 @@ export default function MarketTrends() {
 
   const API_KEY = process.env.REACT_APP_FINNHUB_KEY;
 
-  const fetchData = async () => {
-    try {
-      const results = await Promise.all(
-        symbols.map(async (symbol) => {
-          const res = await fetch(
-            `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`
-          );
-          const data = await res.json();
+  const fetchData = useCallback(async () => {
+  try {
+    const results = await Promise.all(
+      symbols.map(async (symbol) => {
+        const res = await fetch(
+          `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`
+        );
+        const data = await res.json();
 
-          const prevPrice = previousData.current[symbol];
+        const prevPrice = previousData.current[symbol];
 
-          const direction =
-            prevPrice && data.c > prevPrice
-              ? "up"
-              : prevPrice && data.c < prevPrice
-              ? "down"
-              : "";
+        const direction =
+          prevPrice && data.c > prevPrice
+            ? "up"
+            : prevPrice && data.c < prevPrice
+            ? "down"
+            : "";
 
-          previousData.current[symbol] = data.c;
+        previousData.current[symbol] = data.c;
 
-          return {
-            symbol,
-            price: data.c,
-            change: data.dp,
-            direction,
-          };
-        })
-      );
+        return {
+          symbol,
+          price: data.c,
+          change: data.dp,
+          direction,
+        };
+      })
+    );
 
-      setStocks(results);
-    } catch (error) {
-      console.error("Market fetch error:", error);
-    }
-  };
+    setStocks(results);
+  } catch (error) {
+    console.error("Market fetch error:", error);
+  }
+}, [symbols, API_KEY]);
 
   useEffect(() => {
     fetchData();
     const interval = setInterval(fetchData, 15000);
     return () => clearInterval(interval);
-  }, []);
+  }, [fetchData]);
 
   return (
     <section className="market-section">
