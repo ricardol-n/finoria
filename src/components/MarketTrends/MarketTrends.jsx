@@ -42,7 +42,7 @@ export default function MarketTrends() {
   } catch (error) {
     console.error("Market fetch error:", error);
   }
-}, [symbols, API_KEY]);
+}, [API_KEY]);
 
   useEffect(() => {
     fetchData();
