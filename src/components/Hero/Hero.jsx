@@ -13,7 +13,6 @@ import google from "../../assets/logos/google-pay-svgrepo-com.svg";
 import shopify from "../../assets/logos/envato-svgrepo-com.svg";
 import usdc from "../../assets/logos/usdc-svgrepo-com.svg";
 import { menuData } from "../../components/Header/menuData";
-import InvestSection from "../InvestSection";
 
 export default function Hero() {
   const {user,loading} = useContext(AuthContext);

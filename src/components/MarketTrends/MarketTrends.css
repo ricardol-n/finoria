@@ -1,0 +1,102 @@
+/* ==============================
+   MARKET TRENDS
+============================== */
+
+.market-section {
+  padding: clamp(60px, 8vw, 120px) clamp(20px, 6vw, 80px);
+  background: #ffffff;
+}
+
+.market-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.market-section h2 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  color: #0a2540;
+  margin-bottom: 12px;
+}
+
+.market-section p {
+  color: #425466;
+  margin-bottom: 40px;
+  max-width: 600px;
+}
+
+.market-table-wrapper {
+  overflow-x: auto;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.market-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.market-table th {
+  text-align: left;
+  padding: 16px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: #f6f9fc;
+  color: #425466;
+}
+
+.market-table td {
+  padding: 16px;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.market-table tr:hover {
+  background: #f9fbff;
+}
+
+.symbol {
+  font-weight: 700;
+  color: #635bff;
+}
+
+.positive {
+  color: #0a7f5a;
+  font-weight: 600;
+}
+
+.negative {
+  color: #d14343;
+  font-weight: 600;
+}
+.price.up {
+  animation: flashGreen 0.6s ease;
+}
+
+.price.down {
+  animation: flashRed 0.6s ease;
+}
+
+@keyframes flashGreen {
+  0% { background: rgba(10,127,90,0.2); }
+  100% { background: transparent; }
+}
+
+@keyframes flashRed {
+  0% { background: rgba(209,67,67,0.2); }
+  100% { background: transparent; }
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .market-section {
+    text-align: center;
+  }
+
+  .market-section p {
+    margin: 0 auto 30px;
+  }
+}

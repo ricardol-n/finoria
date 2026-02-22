@@ -1,4 +1,4 @@
-import { FaUsers, FaChartLine, FaHandshake, FaShieldAlt,FaGlobe,FaUserShield, } from "react-icons/fa";
+import { FaUsers, FaChartLine, FaHandshake, FaShieldAlt } from "react-icons/fa";
 
 export const menuData = {
   products: {

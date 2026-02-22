@@ -1,6 +1,6 @@
 import "./Header.css";
 import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaTimes, FaChevronRight } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext";
 import { menuData } from "./menuData";
