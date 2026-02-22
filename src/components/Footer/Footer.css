@@ -1,0 +1,140 @@
+/* ==============================
+   FOOTER
+============================== */
+
+.footer {
+  background: #0a2540;
+  color: #cfd7df;
+  padding: 80px 40px 40px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 60px;
+}
+
+/* Columns */
+
+.footer-col h3,
+.footer-col h4 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.footer-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.footer-col p {
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-col li {
+  margin-bottom: 12px;
+}
+
+.footer-col a {
+  text-decoration: none;
+  color: #cfd7df;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-col a:hover {
+  color: white;
+}
+
+/* Bottom Section */
+
+.footer-bottom {
+  margin-top: 60px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+}
+
+.footer-bottom p {
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
+
+.footer-disclaimer {
+  max-width: 800px;
+  margin: 0 auto;
+  opacity: 0.7;
+}
+/* ==============================
+   REGULATORY SECTION
+============================== */
+
+.regulatory-section {
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+.reg-badge {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.reg-icon {
+  min-width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: white;
+  letter-spacing: 1px;
+}
+
+.reg-badge h5 {
+  font-size: 0.9rem;
+  color: white;
+  margin-bottom: 6px;
+}
+
+.reg-badge p {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  line-height: 1.5;
+}
+
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 60px 20px 30px;
+  }
+
+  .footer-container {
+    gap: 40px;
+  }
+  .regulatory-section {
+    margin-top: 40px;
+    gap: 25px;
+  }
+}

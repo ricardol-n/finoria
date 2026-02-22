@@ -1,0 +1,78 @@
+/* ==========================
+   INVEST SECTION
+========================== */
+
+.invest-section {
+  background: #08090c;
+  padding: clamp(60px, 8vw, 120px) clamp(24px, 6vw, 80px);
+  color: white;
+}
+
+.invest-container {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: clamp(40px, 6vw, 80px);
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* LEFT */
+.invest-text h2 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  margin-bottom: 24px;
+}
+
+.invest-text p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  max-width: 540px;
+  opacity: 0.9;
+  margin-bottom: 40px;
+}
+
+/* BUTTON */
+.invest-btn {
+  background: white;
+  color: #0f7b5a;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.invest-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+/* RIGHT */
+.invest-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  display: block;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 1024px) {
+  .invest-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .invest-text p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .invest-image {
+    order: 2;
+  }
+}
