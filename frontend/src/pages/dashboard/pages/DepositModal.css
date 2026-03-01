@@ -1,0 +1,102 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+  padding: 20px;
+}
+
+.deposit-modal {
+  background: #111;
+  color: white;
+
+  width: 100%;
+  max-width: 420px;
+
+  padding: 30px;
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  animation: fadeIn 0.2s ease;
+}
+
+.deposit-modal h2 {
+  margin: 0;
+}
+
+.deposit-modal input,
+.deposit-modal select {
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #1c1c1c;
+  color: white;
+  font-size: 15px;
+}
+
+.deposit-modal button {
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.deposit-modal button:first-of-type {
+  background: #00ff99;
+  color: black;
+}
+
+.deposit-modal button:first-of-type:hover {
+  opacity: 0.9;
+}
+
+.deposit-modal .cancel {
+  background: #2a2a2a;
+  color: white;
+}
+
+.address-box {
+  background: #1a1a1a;
+  padding: 12px;
+  border-radius: 10px;
+  word-break: break-all;
+  font-size: 14px;
+}
+
+.muted {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.status {
+  font-size: 14px;
+  color: orange;
+}
+
+@media (max-width: 480px) {
+  .deposit-modal {
+    padding: 20px;
+    border-radius: 16px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

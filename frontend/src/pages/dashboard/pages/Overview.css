@@ -1,0 +1,220 @@
+/* ================== BASE ================== */
+
+.overview {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* ================== HERO ================== */
+
+.hero1 {
+  background: linear-gradient(135deg, #eef2ff, #ffffff);
+  padding: 40px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 20vh;
+}
+
+.hero1 h1 {
+  font-size: clamp(28px, 4vw, 40px);
+  margin: 0;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* Button */
+
+.primary-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 14px 26px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(99,91,255,0.4);
+}
+
+.primary-btn:active {
+  transform: scale(0.96);
+}
+
+/* ================== GRID 4 (AUTO RESPONSIVE) ================== */
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* ================== GRID 2 (PERFORMANCE + MARKET) ================== */
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+/* ================== CARD ================== */
+
+.card {
+  background: var(--card);
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+  transition: all 0.25s cubic-bezier(.4,0,.2,1);
+  will-change: transform;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+}
+
+.large {
+  min-height: 300px;
+}
+
+/* Chart */
+
+.chart-placeholder {
+  height: 220px;
+  background: var(--bg);
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+/* Market */
+
+.market-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.quick-actions{
+    display: none;
+}
+
+.green { color: var(--success); }
+.red { color: var(--danger); }
+
+/* ================== RESPONSIVE BREAKPOINTS ================== */
+
+/* -------- Tablet -------- */
+@media (max-width: 1024px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .grid-4{
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+
+/* -------- Large Phone -------- */
+@media (max-width: 768px) {
+    .grid-4 {
+    grid-template-columns: repeat(2, 1fr);  /* 👈 FORCE 2 columns */
+    gap: 15px;
+    }
+
+  .overview {
+    gap: 30px;
+  }
+
+  .hero1 {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 30px;
+    border-radius: 24px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+  }
+  .hero1 h1 {
+    font-size: 30px;
+  }
+
+  .primary-btn {
+    background: #facc15;
+    color: #111;
+  }
+
+  .primary-btn {
+    width: 100%;
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(2fr, 1fr);
+  }
+  .quick-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .quick-item {
+    flex: 1;
+    background: white;
+    padding: 16px 10px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    transition: 0.25s ease;
+  }
+
+  .quick-item svg {
+    font-size: 22px;
+    margin-bottom: 6px;
+    color: var(--primary);
+  }
+
+  .quick-item span {
+    display: block;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .quick-item:hover {
+    transform: translateY(-3px);
+  }
+}
+
+/* -------- Small Phone -------- */
+@media (max-width: 480px) {
+    .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .hero1 {
+    padding: 25px;
+  }
+
+  .hero1 h1 {
+    font-size: 26px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+  .card h2 {
+    font-size: 18px;
+  }
+
+  .chart-placeholder {
+    height: 180px;
+  }
+}

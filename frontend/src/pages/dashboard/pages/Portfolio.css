@@ -1,0 +1,98 @@
+.portfolio {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* HEADER */
+
+.portfolio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.portfolio-header h1 {
+  font-size: 36px;
+  margin: 5px 0;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+}
+
+.filters button {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: white;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.filters button.active {
+  background: var(--primary);
+  color: white;
+  border: none;
+}
+
+/* HOLDINGS */
+
+.holdings {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.holding-card {
+  background: white;
+  padding: 20px;
+  border-radius: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+  transition: 0.25s ease;
+}
+
+.holding-card:hover {
+  transform: translateY(-3px);
+}
+
+.symbol {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.positive {
+  color: var(--success);
+}
+
+.negative {
+  color: var(--danger);
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+  .portfolio-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .filters {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .holding-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+}

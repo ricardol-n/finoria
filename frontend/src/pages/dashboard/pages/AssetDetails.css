@@ -1,0 +1,148 @@
+.asset-container {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  animation: fadeIn 0.4s ease;
+}
+
+/* Header */
+.asset-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.asset-header h1 {
+  font-size: 28px;
+  margin: 0;
+}
+
+.asset-symbol {
+  color: #777;
+  font-size: 14px;
+}
+
+.asset-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+/* Price Card */
+.asset-price-card {
+  background: var(--card);
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.asset-price-card h2 {
+  font-size: 30px;
+  margin: 0;
+}
+
+.asset-price-card span {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Chart */
+.asset-chart {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+}
+
+/* Info */
+.asset-info {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+}
+
+.asset-info div {
+  display: flex;
+  flex-direction: column;
+}
+
+.asset-info span {
+  font-size: 14px;
+  color: #777;
+}
+
+.asset-info strong {
+  font-size: 16px;
+}
+
+/* Colors */
+.green { color: #16c784; }
+.red { color: #ea3943; }
+
+.asset-loading {
+  padding: 50px;
+  text-align: center;
+}
+.asset-actions {
+  display: flex;
+  gap: 20px;
+}
+
+.buy-btn,
+.sell-btn {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.buy-btn {
+  background: #16c784;
+  color: white;
+}
+
+.sell-btn {
+  background: #ea3943;
+  color: white;
+}
+
+.buy-btn:hover,
+.sell-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .asset-container {
+    padding: 20px;
+  }
+
+  .asset-price-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .asset-info {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

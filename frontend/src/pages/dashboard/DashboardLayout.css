@@ -1,0 +1,51 @@
+:root {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --primary: #635bff;
+  --accent: #0ea5e9;
+  --success: #10b981;
+  --danger: #ef4444;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: #e2e8f0;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  margin: 0;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.page {
+  padding: 40px;
+  animation: fadeIn 0.35s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 20px;
+    padding-bottom: 100px; /* prevent content behind bottom nav */
+  }
+}
