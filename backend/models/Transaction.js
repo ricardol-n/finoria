@@ -16,11 +16,20 @@ const transactionSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+
+    // 🔥 IMPORTANT FOR WEBHOOK MATCHING
+    paymentId: {
+      type: String,
+      unique:true,
+      sparse:true,
+    },
+
     status: {
       type: String,
       enum: ["pending", "completed", "failed"],
-      default: "completed",
+      default: "pending",   // ✅ FIXED
     },
+
     description: {
       type: String,
     },

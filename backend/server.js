@@ -26,6 +26,8 @@ app.use("/api/dashboard", require("./routes/dashboard"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/market", require("./routes/marketRoutes"));
 app.use("/api/crypto", require("./routes/cryptoDeposit"));
+app.use("/api/crypto", require("./routes/crypto.webhook"));
+
 app.use("/api/admin", adminRoutes);
 
 
