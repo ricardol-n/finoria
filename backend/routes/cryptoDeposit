@@ -1,0 +1,43 @@
+const express = require("express");
+const axios = require("axios");
+const authMiddleware = require("../middleware/auth.middleware");
+const Transaction = require("../models/Transaction");
+const router = express.Router();
+
+router.post("/create", authMiddleware, async (req, res) => {
+  try {
+    const { amount, currency } = req.body;
+
+    const response = await axios.post(
+      "https://api.nowpayments.io/v1/payment",
+      {
+        price_amount: amount,
+        price_currency: "usd",
+        pay_currency: currency,
+      },
+      {
+        headers: {
+          "x-api-key": process.env.NOWPAYMENTS_API_KEY,
+        },
+      }
+    );
+
+    const payment = response.data;
+
+    await Transaction.create({
+      user: req.user.id,
+      type: "deposit",
+      amount,
+      status: "pending",
+      description: `Crypto deposit (${currency})`,
+    });
+
+    res.json(payment);
+
+  } catch (err) {
+    console.error(err.response?.data || err.message);
+    res.status(500).json({ message: "Crypto payment creation failed" });
+  }
+});
+
+module.exports = router;
