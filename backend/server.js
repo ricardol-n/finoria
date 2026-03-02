@@ -1,9 +1,7 @@
-const dotenv = require("dotenv")
+const dotenv = require("dotenv");
 const express = require("express");
 const connectDB = require("./config/db");
-const cors =require("cors");
-const adminRoutes  = require("./routes/admin.routes");
-
+const cors = require("cors");
 
 dotenv.config();
 
@@ -14,26 +12,24 @@ app.use(cors({
   credentials: true,
 }));
 
+// 🔥 1️⃣ Webhook FIRST (before express.json)
+app.use("/api/crypto/webhook", require("./routes/crypto.webhook"));
 
-// middleware
+// 🔥 2️⃣ Then JSON parser
 app.use(express.json());
 
-// routes
-app.use("/api/transactions", require("./routes/transactions"))
-app.use("/api/investments", require("./routes/investment"))
-app.use("/api/portfolio", require("./routes/portfolio"))
+// 🔥 3️⃣ Then normal routes
+app.use("/api/crypto", require("./routes/cryptoDeposit"));
+app.use("/api/transactions", require("./routes/transactions"));
+app.use("/api/investments", require("./routes/investment"));
+app.use("/api/portfolio", require("./routes/portfolio"));
 app.use("/api/dashboard", require("./routes/dashboard"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/market", require("./routes/marketRoutes"));
-app.use("/api/crypto", require("./routes/cryptoDeposit"));
-app.use("/api/crypto", require("./routes/crypto.webhook"));
-
-app.use("/api/admin", adminRoutes);
-
+app.use("/api/admin", require("./routes/admin.routes"));
 
 const PORT = process.env.PORT || 5000;
 
-// connect database
 connectDB();
 
 app.listen(PORT, () =>
