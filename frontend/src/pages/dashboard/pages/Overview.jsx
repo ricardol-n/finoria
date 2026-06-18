@@ -1,120 +1,181 @@
-import { useEffect, useState } from "react";
-import { FiTrendingUp, FiUsers, FiBriefcase, FiGift } from "react-icons/fi";
+import { useEffect, useRef, useState } from "react";
+import {
+  FiArrowUpRight,
+  FiPlus,
+  FiTrendingUp,
+  FiBriefcase,
+  FiGift,
+  FiUsers,
+} from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 import "./Overview.css";
-import api from "../../../api/axios"
+import api from "../../../api/axios";
 import DepositModal from "./DepositModal";
+import TradingChart from "./TradingChart";
 
 export default function Overview() {
-  const [data, setData] = useState(null);
+  const [portfolio, setPortfolio] = useState([]);
+  const [summary, setSummary] = useState(null);
+  const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showDeposit,setShowDeposit] = useState(false);
+  const [showDeposit, setShowDeposit] = useState(false);
+  const [user,setUser] = useState(null);
+  const navigate = useNavigate();
 
+  const loadData = async () => {
+    try {
+      const [pRes, sRes, tRes, uRes] = await Promise.all([
+        api.get("/portfolio"),
+        api.get("/investment/summary"),
+        api.get("/transactions"),
+        api.get("/auth/me"),
+      ]);
+
+      setPortfolio(pRes.data || []);
+      setSummary(sRes.data);
+      setTransactions((tRes.data || []).slice(0, 5));
+      setUser(uRes.data);
+      console.log("Current user:", uRes.data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  
 
   useEffect(() => {
-    const fetchOverview = async () => {
-      try {
-        const res = await api.get("/api/dashboard/overview");
-        setData(res.data);
-      } catch (err) {
-        console.error("Failed to load overview:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchOverview();
+    loadData();
   }, []);
 
   if (loading) return <div className="overview">Loading...</div>;
-  if (!data) return <div className="overview">Failed to load data</div>;
+  if (!summary) return <div className="overview">Failed to load</div>;
 
+  const totalAssets = portfolio.reduce(
+    (sum, asset) => sum + asset.totalValue,
+    0
+  );
+
+  const netWorth =
+  (summary.totalInvested || 0) +
+  (summary.totalProfit || 0) +
+  (user?.balance || 0);
 
   return (
     <div className="overview">
 
-      {/* HERO CARD */}
-      <div className="hero1">
-        <div className="tots">
-          <p className="muted">Total Assets</p>
-          <h1>${data.totalAssets.toLocaleString()}</h1>
+      {/* ===== HERO ===== */}
+      <section className="hero-premium">
+        <div>
+          <span className="hero-label">Net Worth</span>
+          <h1>${netWorth.toLocaleString()}</h1>
+          <p className="hero-sub">
+            ${summary.totalInvested.toLocaleString()} invested ·
+            <span className="profit">
+              {" "}+${summary.totalProfit.toLocaleString()} earnings
+            </span>
+          </p>
         </div>
-       <button className="primary-btn" onClick={() => setShowDeposit(true)}>
-         Deposit
-       </button>
 
-       {showDeposit && <DepositModal onClose={() => setShowDeposit(false)} />}
-      </div>
+        <button
+          className="btn-premium"
+          onClick={() => setShowDeposit(true)}
+        >
+          <FiPlus />
+          Add Funds
+        </button>
+      </section>
 
-       {/* MOBILE QUICK ACTIONS */}
+      {showDeposit && (
+        <DepositModal
+          onClose={() => setShowDeposit(false)}
+          onDepositSuccess={() => {
+            setShowDeposit(false);
+            loadData();
+          }}
+        />
+      )}
+
+      {/* ===== QUICK ACTIONS ===== */}
       <div className="quick-actions">
-        <div className="quick-item">
+        <div
+          className="quick-item"
+          onClick={() => navigate("/dashboard/joint")}
+        >
           <FiTrendingUp />
           <span>Invest</span>
         </div>
 
-        <div className="quick-item">
+        <div
+          className="quick-item"
+          onClick={() => navigate("/dashboard/joint")}
+        >
           <FiUsers />
-          <span>Joint</span>
+          <span>Joint Plan</span>
         </div>
 
-        <div className="quick-item">
+        <div
+          className="quick-item"
+          onClick={() => navigate("/dashboard/portfolio")}
+        >
           <FiBriefcase />
-          <span>Assets</span>
+          <span>Portfolio</span>
         </div>
 
-        <div className="quick-item">
+        <div
+          className="quick-item"
+          onClick={() => navigate("/dashboard/referrals")}
+        >
           <FiGift />
           <span>Referrals</span>
         </div>
       </div>
 
-      {/* STAT GRID */}
-      <div className="grid-4">
-        <div className="card">
-          <p className="muted">Portfolio Value</p>
-          <h2>${data.totalAssets.toLocaleString()}</h2>
+      {/* ===== PERFORMANCE STRIP ===== */}
+      <section className="performance-premium">
+        <div>
+          <span>Available Assets</span>
+          <strong>${totalAssets.toLocaleString()}</strong>
         </div>
 
-        <div className="card">
-          <p className="muted">Active Investments</p>
-          <h2>${data.activeInvestments.toLocaleString()}</h2>
+        <div>
+          <span>Active Investments</span>
+          <strong>{summary.activeCount}</strong>
         </div>
 
-        <div className="card">
-          <p className="muted">Total Earnings</p>
-          <h2>${data.totalEarnings.toLocaleString()}</h2>
+        <div>
+          <span>Total Invested</span>
+          <strong>${summary.totalInvested.toLocaleString()}</strong>
+        </div>
+      </section>
+
+      {/* ===== SNAPSHOT ===== */}
+      <div className="overview-section">
+        <div className="section-header">
+          <h3>Portfolio Snapshot</h3>
+          <span
+            className="link"
+            onClick={() => navigate("/dashboard/portfolio")}
+          >
+            View Portfolio <FiArrowUpRight />
+          </span>
         </div>
 
-        <div className="card">
-          <p className="muted">Joint Account</p>
-          <h2>${data.jointBalance.toLocaleString()}</h2>
-        </div>
-      </div>
-
-      {/* BOTTOM SECTION */}
-      <div className="grid-2">
-        <div className="card large">
-          <h3>Performance</h3>
-          <div className="chart-placeholder">
-            Premium Chart Goes Here
-          </div>
-        </div>
-
-        <div className="card">
-          <h3>Market Snapshot</h3>
-          <div className="market-row">
-            <span>AAPL</span>
-            <span>$189.22</span>
-            <span className="green">+1.4%</span>
-          </div>
-          <div className="market-row">
-            <span>TSLA</span>
-            <span>$245.80</span>
-            <span className="red">-0.8%</span>
-          </div>
+        <div className="snapshot-card">
+          <p>
+            You currently have{" "}
+            <strong>{summary.activeCount}</strong> active
+            investment plan(s) generating returns.
+          </p>
         </div>
       </div>
 
-    </div>
+      {/* ===== PREMIUM CHART ===== */}
+        <div className="chart-luxury">
+          <TradingChart />
+        </div>
+
+        </div>
   );
 }

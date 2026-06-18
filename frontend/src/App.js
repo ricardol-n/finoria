@@ -16,14 +16,14 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import DashboardLayout from "./pages/dashboard/DashboardLayout";
 import Overview from "./pages/dashboard/pages/Overview";
 import Portfolio from "./pages/dashboard/pages/Portfolio";
-import Joint from "./pages/dashboard/pages/Joint";
+import Joint from "./pages/dashboard/pages/JointInvestment";
 import Market from "./pages/dashboard/pages/Market";
 import Transactions from "./pages/dashboard/pages/Transactions";
 import Documents from "./pages/dashboard/pages/Documents";
 import Settings from "./pages/dashboard/pages/Settings";
 import PendingApproval from "./pages/dashboard/pages/PendingApproval";
 import AssetDetails from "./pages/dashboard/pages/AssetDetails";
-
+import PortfolioDetails from "./pages/dashboard/pages/PortfolioDetails";
 
 function App() {
   return (
@@ -53,6 +53,7 @@ function App() {
         <Route path="settings" element={<Settings />} />
         <Route path="pending" element={<PendingApproval />} />
         <Route path="market/:type/:id" element={<AssetDetails/>} />
+        <Route path="/dashboard/portfolio/:id" element={<PortfolioDetails/>} />
       </Route>
 
       {/* 🛡 Admin */}

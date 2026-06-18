@@ -9,12 +9,17 @@ const transactionSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["deposit", "withdrawal", "investment", "earning"],
+      enum: ["deposit", "withdrawal", "investment", "profit","principal_return",],
       required: true,
     },
     amount: {
       type: Number,
       required: true,
+    },
+    // 🔥 link transaction to investment (VERY IMPORTANT)
+    investment: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Investment",
     },
 
     // 🔥 IMPORTANT FOR WEBHOOK MATCHING
@@ -27,7 +32,7 @@ const transactionSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ["pending", "completed", "failed"],
-      default: "pending",   // ✅ FIXED
+      default: "completed",   // ✅ FIXED
     },
 
     description: {

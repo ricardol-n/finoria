@@ -17,7 +17,7 @@ useEffect(() => {
       }
 
       try {
-        const res = await api.get("/api/auth/me"); // uses interceptor
+        const res = await api.get("/auth/me"); // uses interceptor
         setUser(res.data);
       } catch (err) {
         console.error("Token verification failed:", err.response?.data || err.message);
@@ -54,7 +54,7 @@ useEffect(() => {
   // 🔄 Refresh User (after approval, role change, etc.)
   const refreshUser = async () => {
     try {
-      const res = await api.get("/api/auth/me");
+      const res = await api.get("/auth/me");
       setUser(res.data);
     } catch (err) {
       console.error("Refresh failed:", err);

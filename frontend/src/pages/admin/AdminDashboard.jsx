@@ -9,7 +9,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
-        const res = await api.get("/api/admin/dashboard");
+        const res = await api.get("/admin/dashboard");
         setStats(res.data);
       } catch (err) {
         console.error(err);

@@ -3,7 +3,7 @@
 ========================== */
 
 .invest-section {
-  background: #08090c;
+  background: linear-gradient(135deg,#0a1a3ef6,#ec489a85);
   padding: clamp(60px, 8vw, 120px) clamp(24px, 6vw, 80px);
   color: white;
 }
@@ -34,8 +34,8 @@
 
 /* BUTTON */
 .invest-btn {
-  background: white;
-  color: #0f7b5a;
+  background: linear-gradient(135deg,#0a1a3ef6,#ec489a85);
+  color: white;
   padding: 14px 28px;
   border: none;
   border-radius: 10px;
@@ -53,8 +53,10 @@
 .invest-image img {
   width: 100%;
   height: auto;
-  border-radius: 16px;
+  border-radius: 10px;
   display: block;
+  object-fit: cover;
+  box-shadow: 0 8px 20px rgb(50, 7, 46) ;
 }
 
 /* ==========================

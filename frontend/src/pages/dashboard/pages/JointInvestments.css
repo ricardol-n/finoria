@@ -1,0 +1,185 @@
+/* PAGE BASE */
+
+.investment-page {
+  background: #f9fafc;
+  color: #1f2937;
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ---------------- HERO ---------------- */
+
+.investment-hero {
+  padding: 100px 0px 60px;
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #eef2ff 40%,
+    #fdf2f8 100%
+  );
+}
+
+.hero-text {
+  max-width: 900px;
+  margin: auto;
+}
+
+.hero-text h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 15px;
+}
+
+.hero-text p {
+  color: #6b7280;
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+}
+
+/* ---------------- PLANS ---------------- */
+
+.plans-section {
+  padding: 80px 20px;
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* CARD */
+
+.plan-card {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+}
+
+.plan-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+}
+
+/* FEATURED PLAN */
+
+.plan-card.highlight {
+  border: 2px solid #2563eb;
+  transform: scale(1.04);
+}
+
+/* SELECTED PLAN */
+
+.plan-card.selected {
+  box-shadow: 0 0 0 3px rgba(236,72,153,0.25);
+  
+}
+
+/* BADGE */
+
+.badge3 {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg,#2563eb,#ec4899);
+  color: white;
+  font-size: 0.75rem;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* TITLE */
+
+.plan-card h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* RATE */
+
+.return {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg,#2563eb,#ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* MINIMUM */
+
+.min {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+/* ---------------- CALCULATOR ---------------- */
+
+.calculator-section {
+  padding: 80px 20px 120px;
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+
+/* Tablet */
+
+@media (max-width: 1024px) {
+
+  .investment-hero {
+    padding: 120px 20px 80px;
+  }
+
+  .plans-grid {
+    gap: 25px;
+  }
+
+}
+
+/* Small Tablet */
+
+@media (max-width: 768px) {
+
+  .investment-hero {
+    padding: 100px 18px 70px;
+  }
+
+  .plans-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .plan-card {
+    padding: 35px 25px;
+  }
+
+}
+
+/* Mobile */
+
+@media (max-width: 480px) {
+
+  .investment-hero {
+    padding: 80px 16px 60px;
+  }
+
+  .plans-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .plan-card {
+    padding: 30px 20px;
+  }
+
+}

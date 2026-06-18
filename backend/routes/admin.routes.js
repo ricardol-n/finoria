@@ -90,21 +90,26 @@ router.put("/users/:id/balance", async (req, res) => {
   try {
     const { amount } = req.body;
 
-    if (!amount || amount <= 0) {
+    console.log("Incoming amount:", amount);
+
+    if (!amount || isNaN(amount)) {
       return res.status(400).json({ message: "Invalid amount" });
     }
 
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    user.balance = (user.balance || 0) + Number(amount);
+    user.balance += Number(amount);
+
     await user.save();
 
     res.json({
       message: "Balance updated successfully",
       balance: user.balance,
     });
+
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Balance update failed" });
   }
 });

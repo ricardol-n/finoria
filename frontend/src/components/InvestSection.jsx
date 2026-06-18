@@ -5,8 +5,8 @@ import investImg from "../assets/logos/freepik__sp-500-nasdaq-dow-30-nikkel-dax-
 export default function InvestSection() {
   return (
     <section className="invest-section">
+
       <div className="invest-container">
-        
         {/* LEFT */}
         <div className="invest-text">
           <h2>Invest in fractions</h2>

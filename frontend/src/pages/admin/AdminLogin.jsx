@@ -13,7 +13,7 @@ export default function AdminLogin() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post("/api/auth/login", { email, password });
+      const res = await api.post("/auth/login", { email, password });
 
       if (res.data.user.role !== "admin") {
         setError("Not authorized as admin");

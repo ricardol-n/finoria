@@ -9,7 +9,7 @@ import {
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [amount, setAmount] = useState("");
+  const [amounts, setAmounts] = useState({});
 
   const fetchUsers = async () => {
     const res = await getUsers();
@@ -32,12 +32,18 @@ const Users = () => {
   };
 
   const handleAddBalance = async (id) => {
-    if (!amount || amount <= 0) return alert("Enter valid amount");
+  const amount = amounts[id];
 
-    await increaseBalance(id, amount);
-    setAmount("");
-    fetchUsers();
-  };
+  if (!amount || amount <= 0) {
+    return alert("Enter valid amount");
+  }
+
+  await increaseBalance(id, amount);
+
+  setAmounts({ ...amounts, [id]: "" });
+
+  fetchUsers();
+};
 
   if (loading) return <p>Loading users...</p>;
 
@@ -81,11 +87,16 @@ const Users = () => {
 
                 <div style={{ marginTop: 6 }}>
                   <input
-                    type="number"
-                    placeholder="Amount"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    style={{ width: 80 }}
+                      type="number"
+                      placeholder="Amount"
+                      value={amounts[u._id] || ""}
+                      onChange={(e) =>
+                        setAmounts({
+                          ...amounts,
+                          [u._id]: e.target.value,
+                        })
+                      }
+                      style={{ width: 80 }}
                   />
                   <button onClick={() => handleAddBalance(u._id)}>
                     Add Balance

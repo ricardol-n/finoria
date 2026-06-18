@@ -15,14 +15,14 @@
   max-width: 100%;
 }
 
-.hero-text h1 {
+.hero-text1 h1 {
   font-size: clamp(2.5rem, 5vw, 4.5rem);
   font-weight: 800;
   color: #0a2540;
   line-height: 1.05;
 }
 
-.hero-text p {
+.hero-text1 p {
   margin-top: 1.5rem;
   font-size: 1.1rem;
   color: #425466;
@@ -46,7 +46,8 @@
 }
 
 .primary {
-  background: #635bff;
+  /* background: #635bff; */
+  background: linear-gradient(135deg,#0a1a3ef6,#ec489a85);
   color: white;
   border: none;
   padding: 12px 22px;

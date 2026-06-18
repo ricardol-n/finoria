@@ -14,22 +14,26 @@ body {
   font-family: "Inter", sans-serif;
   background: var(--bg);
   margin: 0;
+  overflow-x: hidden;
 }
 
 .layout {
   display: flex;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .main-area {
   flex: 1;
   display: flex;
   flex-direction: column;
+  margin-left: 240px;
 }
 
 .page {
   padding: 40px;
   animation: fadeIn 0.35s ease;
+  z-index: 0;
 }
 
 @keyframes fadeIn {
@@ -45,7 +49,15 @@ body {
 
 @media (max-width: 768px) {
   .page {
+    margin: none;
     padding: 20px;
-    padding-bottom: 100px; /* prevent content behind bottom nav */
+    padding-bottom: 100px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .main-area{
+    margin-left: 0;
+    width: 100%;
   }
 }

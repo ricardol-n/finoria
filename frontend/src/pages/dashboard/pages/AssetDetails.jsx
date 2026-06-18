@@ -1,51 +1,93 @@
 import Chart from "react-apexcharts";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import DepositModal from "./DepositModal";
 import api from "../../../api/axios";
 import "./AssetDetails.css";
 
 export default function AssetDetails() {
+
   const { type, id } = useParams();
+
   const [data, setData] = useState(null);
-  const [history,setHistory] = useState([]);
+  const [chartData, setChartData] = useState([]);
+  const [showDepositModal, setShowDepositModal] = useState(false);
+
+  /* =============================
+     FETCH ASSET DETAILS
+  ============================= */
 
   useEffect(() => {
+
     const fetchDetails = async () => {
       try {
+
         if (type === "crypto") {
-          const res = await api.get("/api/market/crypto");
-          const asset = res.data.find((c) => c.id === id);
+          const res = await api.get("/market/crypto");
+          const asset = res.data.find(c => c.id === id);
           setData(asset);
         }
 
         if (type === "stock") {
-          const res = await api.get("/api/market/stocks");
-          const asset = res.data.find((s) => s.symbol === id);
+          const res = await api.get("/market/stocks");
+          const asset = res.data.find(s => s.symbol === id);
           setData(asset);
         }
+
       } catch (err) {
-        console.error(err);
+        console.error("Asset fetch error:", err.response?.data || err.message);
       }
     };
 
     fetchDetails();
+
   }, [type, id]);
 
+  /* =============================
+     DYNAMIC BINANCE SYMBOL 🔥
+  ============================= */
+
+  const binanceSymbol = useMemo(() => {
+    if (type !== "crypto") return null;
+
+    if (!data?.symbol) return null;
+
+    return data.symbol.toUpperCase() + "USDT";
+  }, [type, data]);
+
+  /* =============================
+     FETCH CHART DATA
+  ============================= */
+
   useEffect(() => {
-  if (type === "stock") {
+
+    if (type !== "crypto") return;
+    if (!binanceSymbol) {
+      console.warn("Invalid symbol for chart:", id);
+      return;
+    }
+
     const fetchHistory = async () => {
       try {
-        const res = await api.get(`/api/market/stocks/history/${id}`);
-        setHistory(res.data);
+        const res = await api.get(
+          `/market/crypto/history/${binanceSymbol}`
+        );
+        setChartData(res.data);
       } catch (err) {
-        console.error("History fetch failed");
+        console.error("Chart fetch error:", err.response?.data || err.message);
       }
     };
-    fetchHistory();
-  }
-}, [type, id]);
 
-  if (!data) return <div className="asset-loading">Loading asset...</div>;
+    fetchHistory();
+
+    const interval = setInterval(fetchHistory, 15000);
+    return () => clearInterval(interval);
+
+  }, [binanceSymbol, type, id]);
+
+  if (!data) {
+    return <div className="asset-loading">Loading asset...</div>;
+  }
 
   const price =
     type === "crypto"
@@ -57,99 +99,135 @@ export default function AssetDetails() {
       ? data.price_change_percentage_24h
       : data.change;
 
-  const chartData =
-    type === "crypto" && data.sparkline_in_7d
-      ? data.sparkline_in_7d.price.map((p, i) => ({
-          price: p,
-          index: i,
-        }))
-      : [];
+  /* =============================
+     CHART CONFIG
+  ============================= */
+
+  const chartOptions = {
+    chart: {
+      toolbar: { show: false },
+      background: "transparent"
+    },
+    grid: {
+      borderColor: "#1f2937"
+    },
+    xaxis: {
+      type: "datetime",
+      labels: {
+        style: { colors: "#9ca3af" }
+      }
+    },
+    yaxis: {
+      labels: {
+        style: { colors: "#9ca3af" }
+      }
+    },
+    plotOptions: {
+      candlestick: {
+        colors: {
+          upward: "#16c784",
+          downward: "#ea3943"
+        }
+      }
+    }
+  };
 
   return (
-    <div className="asset-container">
+    <div className="asset-page">
 
-      {/* HEADER */}
       <div className="asset-header">
-        <div>
-          <h1>
-            {type === "crypto" ? data.name : data.symbol}
-          </h1>
-          <p className="asset-symbol">
-            {type === "crypto"
-              ? data.symbol.toUpperCase()
-              : data.symbol}
-          </p>
+        <div className="asset-title">
+
+          {type === "crypto" && (
+            <img
+              src={data.image}
+              alt={data.name}
+              className="asset-logo"
+            />
+          )}
+
+          <div>
+            <h1>
+              {type === "crypto" ? data.name : data.symbol}
+            </h1>
+
+            <span className="asset-symbol">
+              {type === "crypto"
+                ? data.symbol?.toUpperCase()
+                : data.symbol}
+            </span>
+          </div>
         </div>
 
-        {type === "crypto" && (
-          <img
-            src={data.image}
-            alt={data.name}
-            className="asset-logo"
-          />
-        )}
+        <div className="asset-price">
+          <h2>${price?.toLocaleString()}</h2>
+          <span className={change >= 0 ? "green" : "red"}>
+            {change?.toFixed(2)}%
+          </span>
+        </div>
       </div>
 
-      {/* PRICE CARD */}
-      <div className="asset-price-card">
-        <h2>${price?.toLocaleString()}</h2>
-        <span className={change >= 0 ? "green" : "red"}>
-          {change?.toFixed(2)}%
-        </span>
-      </div>
+      <div className="asset-main">
 
-      <div className="asset-actions">
-      <button className="buy-btn">Buy</button>
-      <button className="sell-btn">Sell</button>
-      </div>
-      
+        <div className="asset-chart-card">
+          {type === "crypto" && chartData.length > 0 && (
+            <Chart
+              type="candlestick"
+              height={420}
+              series={[{ data: chartData }]}
+              options={chartOptions}
+            />
+          )}
+        </div>
 
-      {/* CHART */}
-{((type === "crypto" && chartData.length > 0) ||
-  (type === "stock" && history.length > 0)) && (
-<div className="asset-chart">
-    <Chart
-      type="candlestick"
-      height={350}
-      series={[{ data: history || [] }]}
-      options={{
-        chart: {
-          toolbar: { show: false },
-          animations: { enabled: true },
-        },
-        xaxis: {
-          type: "datetime",
-        },
-        tooltip: {
-          enabled: true,
-        },
-      }}
-    />
-  </div>
-)}
+        <div className="trade-panel">
+          <h3>Trade</h3>
 
-      {/* EXTRA INFO */}
-      <div className="asset-info">
-        {type === "crypto" && (
-          <>
-            <div>
-              <span>Market Cap</span>
-              <strong>${data.market_cap?.toLocaleString()}</strong>
-            </div>
-            <div>
-              <span>24h Volume</span>
-              <strong>${data.total_volume?.toLocaleString()}</strong>
-            </div>
-          </>
-        )}
+          <button
+            className="buy-btn"
+            onClick={() => setShowDepositModal(true)}
+          >
+            Buy {data.symbol?.toUpperCase()}
+          </button>
 
-        {type === "stock" && (
-          <div>
-            <span>Current Price</span>
-            <strong>${data.price?.toFixed(2)}</strong>
+          <button className="sell-btn">
+            Sell {data.symbol?.toUpperCase()}
+          </button>
+
+          <div className="asset-stats">
+
+            {type === "crypto" && (
+              <>
+                <div>
+                  <span>Market Cap</span>
+                  <strong>${data.market_cap?.toLocaleString()}</strong>
+                </div>
+
+                <div>
+                  <span>24h Volume</span>
+                  <strong>${data.total_volume?.toLocaleString()}</strong>
+                </div>
+              </>
+            )}
+
+            {type === "stock" && (
+              <div>
+                <span>Current Price</span>
+                <strong>${data.price?.toFixed(2)}</strong>
+              </div>
+            )}
+
           </div>
-        )}
+        </div>
       </div>
+
+      {showDepositModal && (
+        <DepositModal
+          onClose={() => setShowDepositModal(false)}
+          assetName={data.symbol}
+          assetId={id}
+        />
+      )}
 
     </div>
   );

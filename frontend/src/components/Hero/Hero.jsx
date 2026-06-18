@@ -40,7 +40,7 @@ export default function Hero() {
 
       <div className="hero-content">
         {/* LEFT */}
-        <div className="hero-text">
+        <div className="hero-text1">
           <span className="badge">
             Sessions 2026 · Early-bird registration →
           </span>

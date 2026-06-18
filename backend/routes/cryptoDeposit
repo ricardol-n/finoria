@@ -1,0 +1,182 @@
+const express = require("express");
+const axios = require("axios");
+const authMiddleware = require("../middleware/auth.middleware");
+const Transaction = require("../models/Transaction");
+const cache = {};
+const router = express.Router();
+
+/* =========================================
+   CREATE CRYPTO PAYMENT
+========================================= */
+router.post("/create", authMiddleware, async (req, res) => {
+  try {
+    const { amount, currency } = req.body;
+
+    if (!amount || Number(amount) <= 0) {
+      return res.status(400).json({
+        message: "Invalid amount",
+      });
+    }
+
+    if (!currency) {
+      return res.status(400).json({
+        message: "Currency is required",
+      });
+    }
+
+    const response = await axios.post(
+      "https://api.nowpayments.io/v1/payment",
+      {
+        price_amount: Number(amount),
+        price_currency: "usd",
+        pay_currency: currency.toLowerCase(),
+        ipn_callback_url:
+          "https://finoria.onrender.com/api/crypto/webhook",
+      },
+      {
+        headers: {
+          "x-api-key": process.env.NOWPAYMENTS_API_KEY,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const payment = response.data;
+
+    if (!payment || !payment.payment_id) {
+      return res.status(500).json({
+        message: "Payment provider returned invalid response",
+      });
+    }
+
+    /* SAVE TRANSACTION */
+    await Transaction.create({
+      user: req.user.id,
+      type: "deposit",
+      amount: Number(amount),
+      status: "pending",
+      paymentId: payment.payment_id,
+      description: `Crypto deposit (${currency})`,
+    });
+
+    res.json({
+      payment_id: payment.payment_id,
+      pay_address: payment.pay_address,
+      pay_amount: payment.pay_amount,
+      pay_currency: payment.pay_currency,
+    });
+
+  } catch (err) {
+    console.error(
+      "Crypto payment error:",
+      err.response?.data || err.message
+    );
+
+    res.status(500).json({
+      message: "Crypto payment creation failed",
+      error: err.response?.data || err.message,
+    });
+  }
+});
+
+
+/* =========================================
+   GET MINIMUM DEPOSIT AMOUNT
+========================================= */
+
+
+router.get("/min-amount", async (req, res) => {
+  try {
+    const { currency_to } = req.query;
+
+    if (!currency_to) {
+      return res.status(400).json({
+        message: "currency_to required",
+      });
+    }
+
+    const currency = currency_to.toLowerCase();
+
+    /* USE CACHE */
+    if (cache[currency] && Date.now() - cache[currency].time < 600000) {
+      return res.json({
+        min_amount: cache[currency].value,
+      });
+    }
+
+    console.log("Fetching minimum amount for:", currency);
+
+    const response = await axios.get(
+      "https://api.nowpayments.io/v1/min-amount",
+      {
+        params: {
+          currency_from: "usd",
+          currency_to: currency,
+        },
+        headers: {
+          "x-api-key": process.env.NOWPAYMENTS_API_KEY,
+        },
+      }
+    );
+
+    const min = response.data.min_amount;
+
+    cache[currency] = {
+      value: min,
+      time: Date.now(),
+    };
+
+    res.json({ min_amount: min });
+
+  } catch (error) {
+
+    console.error(
+      "Min amount error:",
+      error.response?.data || error.message
+    );
+
+    res.status(500).json({
+      message: "Failed to fetch minimum amount",
+    });
+
+  }
+});
+
+
+/* =========================================
+   CHECK PAYMENT STATUS
+========================================= */
+router.get("/status/:paymentId", async (req, res) => {
+  try {
+    const { paymentId } = req.params;
+
+    if (!paymentId) {
+      return res.status(400).json({
+        message: "paymentId is required",
+      });
+    }
+
+    const transaction = await Transaction.findOne({
+      paymentId,
+    });
+
+    if (!transaction) {
+      return res.status(404).json({
+        message: "Transaction not found",
+      });
+    }
+
+    res.json({
+      status: transaction.status,
+    });
+
+  } catch (err) {
+    console.error("Status fetch error:", err);
+
+    res.status(500).json({
+      message: "Failed to fetch transaction status",
+    });
+  }
+});
+
+module.exports = router;

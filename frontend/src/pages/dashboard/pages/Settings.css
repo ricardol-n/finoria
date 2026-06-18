@@ -1,0 +1,329 @@
+/* MAIN CONTAINER */
+
+.settings-container{
+padding:40px;
+background:#f8fafc;
+min-height:100vh;
+font-family:Inter, sans-serif;
+}
+
+/* TITLE */
+
+.settings-title{
+font-size:28px;
+font-weight:700;
+color:#0f172a;
+margin-bottom:25px;
+}
+
+/* LAYOUT */
+
+.settings-layout{
+display:grid;
+grid-template-columns:240px 1fr;
+gap:25px;
+align-items:start;
+}
+
+/* SIDEBAR */
+
+.settings-sidebar{
+background:white;
+border-radius:14px;
+padding:15px;
+box-shadow:0 8px 25px rgba(0,0,0,0.05);
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+
+.settings-sidebar button{
+padding:12px 14px;
+border:none;
+background:transparent;
+text-align:left;
+border-radius:8px;
+cursor:pointer;
+font-size:14px;
+font-weight:500;
+color:#334155;
+transition:0.2s;
+}
+
+.settings-sidebar button:hover{
+background:#f1f5f9;
+}
+
+.settings-sidebar .active{
+background:linear-gradient(135deg,#2563eb,#ec4899);
+color:white;
+}
+
+/* CONTENT */
+
+.settings-content{
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+/* CARD */
+
+.settings-card{
+background:white;
+border-radius:14px;
+padding:25px;
+box-shadow:0 8px 25px rgba(0,0,0,0.05);
+display:flex;
+flex-direction:column;
+gap:12px;
+border:1px solid #e2e8f0;
+}
+
+.settings-card h3{
+font-size:18px;
+font-weight:600;
+color:#0f172a;
+margin-bottom:8px;
+}
+
+/* INPUTS */
+
+.settings-card input{
+padding:12px;
+border-radius:8px;
+border:1px solid #e2e8f0;
+font-size:14px;
+transition:0.2s;
+}
+
+.settings-card input:focus{
+outline:none;
+border-color:#2563eb;
+box-shadow:0 0 0 2px rgba(37,99,235,0.1);
+}
+
+/* BUTTON */
+
+.primary-btn{
+margin-top:10px;
+padding:12px;
+border:none;
+border-radius:10px;
+background:linear-gradient(135deg,#2563eb,#ec4899);
+color:white;
+font-weight:600;
+font-size:14px;
+cursor:pointer;
+transition:0.2s;
+}
+
+.primary-btn:hover{
+opacity:0.9;
+}
+
+/* SECURITY ROW */
+
+.security-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px 0;
+}
+
+.security-row p{
+font-size:13px;
+color:#64748b;
+margin-top:3px;
+}
+
+/* SWITCH */
+
+.switch{
+position:relative;
+display:inline-block;
+width:50px;
+height:24px;
+}
+
+.switch input{
+opacity:0;
+width:0;
+height:0;
+}
+
+.slider{
+position:absolute;
+cursor:pointer;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:#cbd5f5;
+transition:.4s;
+border-radius:34px;
+}
+
+.slider:before{
+position:absolute;
+content:"";
+height:18px;
+width:18px;
+left:3px;
+bottom:3px;
+background:white;
+transition:.4s;
+border-radius:50%;
+}
+
+input:checked + .slider{
+background:#2563eb;
+}
+
+input:checked + .slider:before{
+transform:translateX(26px);
+}
+
+/* LOGIN ACTIVITY */
+
+.activity-row{
+display:flex;
+justify-content:space-between;
+padding:12px 0;
+border-bottom:1px solid #e5e7eb;
+font-size:14px;
+}
+
+/* DEVICES */
+
+.device-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px 0;
+}
+
+.device-row p{
+font-size:13px;
+color:#64748b;
+}
+
+/* DANGER BUTTON */
+
+.danger-btn{
+background:#ef4444;
+border:none;
+padding:8px 14px;
+border-radius:8px;
+color:white;
+font-size:13px;
+cursor:pointer;
+}
+
+.danger-btn:hover{
+background:#dc2626;
+}
+
+/* LOGOUT */
+
+.logout-btn{
+margin-top:10px;
+background:#ef4444;
+border:none;
+padding:12px;
+border-radius:8px;
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+.logout-btn:hover{
+background:#dc2626;
+}
+
+/* DANGER ZONE */
+
+.danger-zone{
+border:1px solid #fecaca;
+background:#fff5f5;
+}
+
+/* TABLET RESPONSIVE */
+
+@media(max-width:1000px){
+
+.settings-layout{
+grid-template-columns:200px 1fr;
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.settings-container{
+padding:20px;
+}
+
+.settings-layout{
+grid-template-columns:1fr;
+}
+
+/* Sidebar becomes horizontal */
+
+.settings-sidebar{
+flex-direction:row;
+overflow-x:auto;
+gap:10px;
+}
+
+.settings-sidebar button{
+white-space:nowrap;
+padding:10px 14px;
+font-size:13px;
+}
+
+.settings-content{
+margin-top:10px;
+}
+
+.settings-card{
+padding:18px;
+}
+
+.settings-title{
+font-size:22px;
+}
+
+.activity-row{
+flex-direction:column;
+gap:4px;
+}
+
+.device-row{
+flex-direction:column;
+align-items:flex-start;
+gap:8px;
+}
+
+}
+
+/* SMALL PHONES */
+
+@media(max-width:480px){
+
+.settings-title{
+font-size:20px;
+}
+
+.primary-btn{
+padding:10px;
+font-size:13px;
+}
+
+.settings-card input{
+padding:10px;
+}
+
+}

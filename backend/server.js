@@ -21,17 +21,22 @@ app.use(express.json());
 // 🔥 3️⃣ Then normal routes
 app.use("/api/crypto", require("./routes/cryptoDeposit"));
 app.use("/api/transactions", require("./routes/transactions"));
-app.use("/api/investments", require("./routes/investment"));
+app.use("/api/investment", require("./routes/investment"));
 app.use("/api/portfolio", require("./routes/portfolio"));
 app.use("/api/dashboard", require("./routes/dashboard"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/market", require("./routes/marketRoutes"));
 app.use("/api/admin", require("./routes/admin.routes"));
+app.use("/api/settings", require("./routes/settings"));
+app.use("/api/security", require("./routes/security"));
 
 const PORT = process.env.PORT || 5000;
 
 connectDB();
 
+// 🔥 VERY IMPORTANT: LOAD CRON JOB
+require("./cron/investmentProfit");
+
 app.listen(PORT, () =>
-  console.log(`🚀 Server running on port ${PORT}`)
+  console.log(`🚀 Server running on port`)
 );

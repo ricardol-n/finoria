@@ -16,12 +16,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
-    role: {
-      type: String,
-      enum: ["user", "admin"],
-      default: "user",
-    },
     
     balance: {
       type: Number,
@@ -46,7 +40,16 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["user","admin"],
       default: "user",
-    }
+    },
+    twoFA: {
+      type:Boolean,
+      default: false
+    },
+    twoFASecret: {
+      type:String,
+      default:null
+    },
+
   },
   { timestamps: true }
 );

@@ -72,7 +72,7 @@ export default function MarketTrends() {
 
   return (
     <section className="market-section">
-      <div className="market-container">
+      <div className="market-container1">
         <h2>Live Market Overview</h2>
 
         {/* CATEGORY TOGGLE */}

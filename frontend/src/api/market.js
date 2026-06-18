@@ -1,6 +1,6 @@
 import api from "./axios";
 
 export const getCryptoMarket = async () => {
-  const res = await api.get("/api/market/crypto");
+  const res = await api.get("/market/crypto");
   return res.data;
 }

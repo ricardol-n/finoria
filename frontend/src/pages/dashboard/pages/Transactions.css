@@ -1,0 +1,87 @@
+.transactions-page{
+padding:28px;
+color:#e5e7eb;
+background:#0f172a;
+min-height:100vh;
+font-family:Inter,sans-serif;
+}
+
+.transactions-header{
+margin-bottom:20px;
+}
+
+.transactions-header h2{
+font-size:22px;
+font-weight:600;
+}
+
+.transactions-table{
+background:#111827;
+border-radius:12px;
+overflow:hidden;
+border:1px solid #1f2937;
+}
+
+.table-head{
+display:grid;
+grid-template-columns:1fr 1fr 1fr 1fr 1fr 1.5fr;
+padding:14px;
+background:#1f2937;
+font-weight:600;
+font-size:13px;
+}
+
+.table-row{
+display:grid;
+grid-template-columns:1fr 1fr 1fr 1fr 1fr 1.5fr;
+padding:14px;
+border-top:1px solid #1f2937;
+font-size:14px;
+}
+
+.table-row:hover{
+background:#111827;
+}
+
+.tx-type.buy{
+color:#16c784;
+}
+
+.tx-type.sell{
+color:#ea3943;
+}
+
+.status.completed{
+color:#16c784;
+}
+
+.status.pending{
+color:#f59e0b;
+}
+
+.empty-row{
+padding:30px;
+text-align:center;
+color:#9ca3af;
+}
+
+@media(max-width:768px){
+
+.table-head{
+grid-template-columns:1fr 1fr 1fr;
+}
+
+.table-row{
+grid-template-columns:1fr 1fr 1fr;
+}
+
+.table-head span:nth-child(4),
+.table-head span:nth-child(5),
+.table-head span:nth-child(6),
+.table-row span:nth-child(4),
+.table-row span:nth-child(5),
+.table-row span:nth-child(6){
+display:none;
+}
+
+}

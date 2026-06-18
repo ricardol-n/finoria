@@ -11,6 +11,7 @@
 .header.sticky {
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   background: rgba(6, 10, 23, 0.85);
+  color: white;
 }
 
 .header-inner {
@@ -41,7 +42,7 @@
 
 .nav a {
   text-decoration: none;
-  color: #0a2540;
+  /* color: #0a2540; */
   font-weight: 500;
   font-size: 0.95rem;
 }
@@ -97,6 +98,7 @@
 
 .nav-item:hover .underline {
   transform: scaleX(1);
+
 }
 .actions button {
   margin-left: 1rem;

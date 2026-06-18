@@ -4,6 +4,11 @@
   padding: 40px 30px;
   border-right: 1px solid var(--border);
   transition: transform 0.3s ease;
+  position: fixed;   /* FIX */
+  top: 0;            /* anchor to top */
+  left: 0;
+  height: 100vh;     /* full screen height */
+  z-index: 1000; 
 }
 
 .brand {
@@ -42,6 +47,7 @@
     z-index: 1001;
     transform: translateX(-100%);
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    overflow-y: auto;
   }
 
   .sidebar.open {
