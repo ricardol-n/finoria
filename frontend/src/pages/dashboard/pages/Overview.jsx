@@ -23,7 +23,7 @@ export default function Overview() {
 
   const loadData = async () => {
     try {
-      const [pRes, sRes, tRes, uRes] = await Promise.all([
+      const [pRes, sRes, uRes] = await Promise.all([
         api.get("/portfolio"),
         api.get("/investment/summary"),
         api.get("/auth/me"),

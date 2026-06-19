@@ -1,5 +1,5 @@
 import "./MarketTrends.css";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback ,useMemo} from "react";
 
 const STOCKS = ["AAPL", "MSFT", "NVDA", "AMZN"];
 const ETFS = ["SPY", "QQQ", "VTI"];
@@ -13,11 +13,11 @@ export default function MarketTrends() {
   const previousData = useRef({});
   const API_KEY = process.env.REACT_APP_FINNHUB_KEY;
 
-  const getSymbols = () => {
+  const getSymbols = useCallback(() => {
     if (category === "stocks") return STOCKS;
     if (category === "etf") return ETFS;
     if (category === "crypto") return CRYPTO;
-  };
+  }, [category]);
 
   const fetchData = useCallback(async () => {
   try {
@@ -55,7 +55,7 @@ export default function MarketTrends() {
   } catch (error) {
     console.error("Market fetch error:", error);
   }
-}, [category, API_KEY]);
+}, [ API_KEY, getSymbols]);
 
   useEffect(() => {
   fetchData();
@@ -65,11 +65,13 @@ export default function MarketTrends() {
   return () => clearInterval(interval);
 }, [fetchData]);
 
-  const sortedAssets = [...assets].sort((a, b) =>
+  const sortedAssets = useMemo(() => {
+  return [...assets].sort((a, b) =>
     sortType === "gainers"
       ? b.change - a.change
       : a.change - b.change
   );
+}, [assets, sortType]);
 
   return (
     <section className="market-section">
