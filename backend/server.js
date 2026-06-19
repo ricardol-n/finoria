@@ -8,7 +8,9 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: true,
+  origin: ["http://localhost:3000",
+    " https://finoria.onrender.com",
+  ],
   credentials: true,
 }));
 
