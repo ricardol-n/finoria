@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/static/css/main.99fce88e.css",
+    "main.js": "/static/js/main.26d89819.js",
+    "static/media/freepik__sp-500-nasdaq-dow-30-nikkel-dax-index-uk-100-eurus__65441.png": "/static/media/freepik__sp-500-nasdaq-dow-30-nikkel-dax-index-uk-100-eurus__65441.968fc957a85e779b9e8d.png",
+    "static/media/envato-svgrepo-com.svg": "/static/media/envato-svgrepo-com.927429ff69f665686f5d62a10d03617b.svg",
+    "static/media/amazon-color-svgrepo-com.svg": "/static/media/amazon-color-svgrepo-com.c85adf3bd9e4e37fbaa3827deab78302.svg",
+    "static/media/ford-svgrepo-com.svg": "/static/media/ford-svgrepo-com.f301fd66bbcb91e082c3f8e37ba75128.svg",
+    "static/media/google-pay-svgrepo-com.svg": "/static/media/google-pay-svgrepo-com.5f9b8c8479ed83d8905139b2743c370c.svg",
+    "static/media/nvidia-logo-svgrepo-com.svg": "/static/media/nvidia-logo-svgrepo-com.00191c38ab0488e6e5f15b52b94d1b34.svg",
+    "static/media/coinbase-svgrepo-com.svg": "/static/media/coinbase-svgrepo-com.c7e56f7b0254aedeba6460de52dce85d.svg",
+    "static/media/usdc-svgrepo-com.svg": "/static/media/usdc-svgrepo-com.91d6430345df5bcd96faf81b8e685238.svg",
+    "index.html": "/index.html",
+    "main.99fce88e.css.map": "/static/css/main.99fce88e.css.map",
+    "main.26d89819.js.map": "/static/js/main.26d89819.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.99fce88e.css",
+    "static/js/main.26d89819.js"
+  ]
+}
