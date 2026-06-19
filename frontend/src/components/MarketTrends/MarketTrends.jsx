@@ -1,5 +1,5 @@
 import "./MarketTrends.css";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 const STOCKS = ["AAPL", "MSFT", "NVDA", "AMZN"];
 const ETFS = ["SPY", "QQQ", "VTI"];
@@ -19,50 +19,51 @@ export default function MarketTrends() {
     if (category === "crypto") return CRYPTO;
   };
 
-  const fetchData = async () => {
-    try {
-      const symbols = getSymbols();
+  const fetchData = useCallback(async () => {
+  try {
+    const symbols = getSymbols();
 
-      const results = await Promise.all(
-        symbols.map(async (symbol) => {
-          const endpoint =
-            category === "crypto"
-              ? `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`
-              : `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`;
+    const results = await Promise.all(
+      symbols.map(async (symbol) => {
+        const endpoint =
+          `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`;
 
-          const res = await fetch(endpoint);
-          const data = await res.json();
+        const res = await fetch(endpoint);
+        const data = await res.json();
 
-          const prevPrice = previousData.current[symbol];
-          const direction =
-            prevPrice && data.c > prevPrice
-              ? "up"
-              : prevPrice && data.c < prevPrice
-              ? "down"
-              : "";
+        const prevPrice = previousData.current[symbol];
 
-          previousData.current[symbol] = data.c;
+        const direction =
+          prevPrice && data.c > prevPrice
+            ? "up"
+            : prevPrice && data.c < prevPrice
+            ? "down"
+            : "";
 
-          return {
-            symbol: symbol.replace("BINANCE:", ""),
-            price: data.c,
-            change: data.dp,
-            direction,
-          };
-        })
-      );
+        previousData.current[symbol] = data.c;
 
-      setAssets(results);
-    } catch (error) {
-      console.error("Market fetch error:", error);
-    }
-  };
+        return {
+          symbol: symbol.replace("BINANCE:", ""),
+          price: data.c,
+          change: data.dp,
+          direction,
+        };
+      })
+    );
+
+    setAssets(results);
+  } catch (error) {
+    console.error("Market fetch error:", error);
+  }
+}, [category, API_KEY]);
 
   useEffect(() => {
-    fetchData();
-    const interval = setInterval(fetchData, 20000);
-    return () => clearInterval(interval);
-  }, [category]);
+  fetchData();
+
+  const interval = setInterval(fetchData, 20000);
+
+  return () => clearInterval(interval);
+}, [fetchData]);
 
   const sortedAssets = [...assets].sort((a, b) =>
     sortType === "gainers"

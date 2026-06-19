@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FiArrowUpRight,
   FiPlus,
@@ -16,7 +16,6 @@ import TradingChart from "./TradingChart";
 export default function Overview() {
   const [portfolio, setPortfolio] = useState([]);
   const [summary, setSummary] = useState(null);
-  const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showDeposit, setShowDeposit] = useState(false);
   const [user,setUser] = useState(null);
@@ -27,13 +26,11 @@ export default function Overview() {
       const [pRes, sRes, tRes, uRes] = await Promise.all([
         api.get("/portfolio"),
         api.get("/investment/summary"),
-        api.get("/transactions"),
         api.get("/auth/me"),
       ]);
 
       setPortfolio(pRes.data || []);
       setSummary(sRes.data);
-      setTransactions((tRes.data || []).slice(0, 5));
       setUser(uRes.data);
       console.log("Current user:", uRes.data);
     } catch (err) {

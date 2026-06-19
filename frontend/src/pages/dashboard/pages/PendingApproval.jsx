@@ -15,7 +15,7 @@ const PendingApproval = () => {
     }, 5000); // check every 5 seconds
 
     return () => clearInterval(interval);
-  }, []);
+  }, [refreshUser]);
 
   // 🚀 Auto redirect if approved
   useEffect(() => {
